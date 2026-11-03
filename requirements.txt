@@ -2,3 +2,8 @@ chromadb
 sentence-transformers
 python-dotenv
 requests
+google-generativeai
+scikit-learn
+gensim
+scipy
+jupyter

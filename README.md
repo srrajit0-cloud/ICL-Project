@@ -1,31 +1,38 @@
-# ICL-Project: RAG learning guide
+# ICL-Project: RAG learning materials
 
-A beginner-friendly guide to building a Retrieval-Augmented Generation (RAG) system with Python, ChromaDB, sentence-transformer embeddings, and an optional LLM provider. The material is organized around document ingestion, chunking, vector storage, retrieval, grounded generation, and vector-store CRUD operations.
+A step-by-step Retrieval-Augmented Generation (RAG) learning project using Python, ChromaDB, sentence-transformer embeddings, and optional Gemini/Groq generation. The notebooks follow the learning sequence of the reference ICL-Project, with reproducible examples and persistent local storage.
 
-## Guide
+## Run the notebooks
 
-- [End-to-end RAG pipeline](docs/RAG_PIPELINE.md) — concepts, setup, and implementation steps from source documents to generated answers.
-- [ChromaDB CRUD operations](docs/CHROMA_CRUD.md) — create, read, update, upsert, delete, and search records.
-
-## Quick start
-
-Use Python 3.10 or later. Create and activate a virtual environment, then install dependencies:
+Use Python 3.10 or later. Create a virtual environment and install dependencies:
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\\Scripts\\activate
 pip install -r requirements.txt
+jupyter notebook
 ```
 
-The guide examples use local sample text and a persistent ChromaDB collection. An LLM API key is only needed for the answer-generation stage. Copy `.env.example` to `.env` and add a provider key if you choose to run that stage. Never commit real API keys.
+Open and run notebooks in order. The first three RAG steps work without an LLM API key. For Step 4, copy `.env.example` to `.env` and set `GROQ_API_KEY` or `GEMINI_API_KEY`. Keep `.env` private and never commit API keys.
 
-## RAG in brief
+## Step-by-step notebooks
 
-1. Load trusted source documents.
-2. Split documents into manageable, overlapping chunks while retaining source metadata.
-3. Embed each chunk and persist it in ChromaDB.
-4. Embed a user question and retrieve the closest chunks, optionally filtering by metadata.
-5. Pass the retrieved evidence and question to an LLM; instruct it to abstain when the evidence is insufficient.
-6. Return the answer with source references and evaluate retrieval and answer quality.
+1. [RAG Step 1: Load documents and chunk text](RAG_Step1_Document_Loading_and_Chunkin.ipynb)
+2. [RAG Step 2: Store chunks in ChromaDB](RAG_Step2_Storing_Chunks_in_ChromaDB.ipynb)
+3. [RAG Step 3: Retrieve relevant context](RAG_Step3_Retrieving_Relevant_Context.ipynb)
+4. [RAG Step 4: Pass context to Gemini/Groq](RAG_Step4_Passing_Context_to_Gemini_Groq_LLM.ipynb)
 
-See the linked guides for runnable Python examples, operational notes, and CRUD details.
+## Supporting learning files
+
+- [ChromaDB CRUD operations notebook](CRUD_Operations.ipynb)
+- [Word embeddings notebook](Word_Embeddings.ipynb)
+- [Cosine similarity notebook](Calculating_Cosine_Similarity_Mathematically.ipynb)
+- [RAG pipeline guide](docs/RAG_PIPELINE.md)
+- [ChromaDB CRUD guide](docs/CHROMA_CRUD.md)
+- [Reference chatbot assessment PDF](https://github.com/karanbala007/ICL-Project/blob/main/mini_assessment_chatbot.pdf)
+
+## Pipeline overview
+
+`load documents → chunk → embed → store vectors → retrieve top-k context → generate a grounded answer → evaluate`
+
+The notebooks provide small teaching examples. For real deployments, use documents you are authorized to process, preserve source metadata, evaluate retrieval/answer quality, and configure data retention and access controls.
